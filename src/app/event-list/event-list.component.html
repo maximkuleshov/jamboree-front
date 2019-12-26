@@ -1,0 +1,21 @@
+
+<h3>List of events</h3>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">From</th>
+      <th scope="col">To</th>
+      <th scope="col">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let event of events">
+            <td>{{event.title}} -- {{event.id}}</td>
+            <td>{{event.startDate | date:'shortDate'}}</td>
+            <td>{{event.endDate | date:'shortDate'}}</td>
+            <td><button type="button" class="btn btn-primary" (click)="applyRequest(event.id)">Apply</button></td>
+        </tr>
+    </tbody>
+  </table>
