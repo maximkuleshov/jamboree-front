@@ -1,7 +1,7 @@
-import { Event } from './event';
+import { EventCustom } from './event';
 
 describe('Event', () => {
   it('should create an instance', () => {
-    expect(new Event()).toBeTruthy();
+    expect(new EventCustom()).toBeTruthy();
   });
 });

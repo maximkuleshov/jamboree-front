@@ -1,9 +1,9 @@
 export class ApplyRequest {
-    userId: number;
-    eventId: number;
+    userLogin: string;
+    eventId: string;
 
-    constructor (userId: number, eventId: number) {
-        this.userId = userId;
+    constructor (userLogin: string, eventId: string) {
+        this.userLogin = userLogin;
         this.eventId = eventId;
     }
 }

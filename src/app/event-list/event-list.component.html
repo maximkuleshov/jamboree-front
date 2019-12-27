@@ -1,5 +1,5 @@
 
-<h3>List of events</h3>
+<h3 style="padding-bottom: 1em">List of events</h3>
 
 <table class="table">
     <thead class="thead-dark">
@@ -7,15 +7,19 @@
       <th scope="col">Title</th>
       <th scope="col">From</th>
       <th scope="col">To</th>
+      <th scope="col">Status</th>
       <th scope="col">&nbsp;</th>
     </tr>
     </thead>
     <tbody>
         <tr *ngFor="let event of events">
-            <td>{{event.title}} -- {{event.id}}</td>
+            <td title="{{ event.description }}">{{event.title.toLowerCase()}}</td>
             <td>{{event.startDate | date:'shortDate'}}</td>
             <td>{{event.endDate | date:'shortDate'}}</td>
-            <td><button type="button" class="btn btn-primary" (click)="applyRequest(event.id)">Apply</button></td>
+            <td>
+              <span>{{ event.status }}</span>
+            </td>
+            <td><button type="button" class="btn btn-primary"  [disabled]="isUserAssigned(event)" (click)="applyRequest(event.id)">Apply</button></td>
         </tr>
     </tbody>
   </table>
