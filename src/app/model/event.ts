@@ -1,5 +1,6 @@
 import { EventStatus } from './event.status';
 import { User } from './user';
+import { isString } from 'util';
 
 export class EventCustom {
     id: string;
@@ -12,11 +13,11 @@ export class EventCustom {
 
     constructor(obj?: any) {
         Object.assign(this, obj);
-        if (obj['startDate']) {
-            this.startDate = new Date(obj['startDate']);
+        if (obj['startDate'] && typeof obj['startDate'] === "string") {
+            this.startDate = new Date(Date.parse(obj['startDate']));
         }
-        if (obj['endDate']) {
-            this.endDate = new Date(obj['endDate']);
+        if (obj['endDate'] && typeof obj['endDate'] === "string") {
+            this.endDate = new Date(Date.parse(obj['endDate']));
         }
     }
 }

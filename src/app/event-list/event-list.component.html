@@ -1,25 +1,44 @@
+<h2 style="padding-bottom: 1em">List of events</h2>
 
-<h3 style="padding-bottom: 1em">List of events</h3>
+<p>Here you can see all existing events. For opened and scheduled event - you can apply you request by pressing the button</p>
 
-<table class="table">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">From</th>
-      <th scope="col">To</th>
-      <th scope="col">Status</th>
-      <th scope="col">&nbsp;</th>
-    </tr>
+<div *ngIf="errorMessage != null" class="alert alert-danger" role="alert">
+  {{errorMessage}}
+</div>
+
+<table class="table table-striped">
+    <thead class="thead">
+      <tr>
+        <th scope="col" sortable="title" (sort)="onSort($event)">Title</th>
+        <th scope="col" sortable="startDate" (sort)="onSort($event)">From</th>
+        <th scope="col" sortable="endDate" (sort)="onSort($event)">To</th>
+        <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let event of events">
-            <td title="{{ event.description }}">{{event.title.toLowerCase()}}</td>
-            <td>{{event.startDate | date:'shortDate'}}</td>
-            <td>{{event.endDate | date:'shortDate'}}</td>
-            <td>
-              <span>{{ event.status }}</span>
-            </td>
-            <td><button type="button" class="btn btn-primary"  [disabled]="isUserAssigned(event)" (click)="applyRequest(event.id)">Apply</button></td>
-        </tr>
+      <tr *ngFor="let event of events">
+          <td title="{{ event.description }}">
+            {{event.title}}
+          </td>
+          <td>{{event.startDate | date:'shortDate'}}</td>
+          <td>{{event.endDate | date:'shortDate'}}</td>
+          <td>
+            <span [ngClass]="{
+              'text-secondary': event.status == eventStatus.SCHEDULED,
+              'text-success': event.status == eventStatus.FINISHED,
+              'text-primary': event.status == eventStatus.OPENED,
+              'text-danger': event.status == eventStatus.IN_PROGRESS
+            }">{{ event.status }}</span>
+          </td>
+          <td>
+            <i class="fa fa-check text-success" *ngIf="isParticipant(event)"> Applied</i>
+            <button type="button" class="btn btn-primary" *ngIf="canApply(event)" (click)="applyRequest(event.id)">
+              <i class="fa fa-check>"> </i>Apply
+            </button>
+        </td>
+      </tr>
     </tbody>
-  </table>
+</table>
+
+<button type="button" *ngIf="isAdmin()"  (click)="addEvent()" class="btn btn-danger"><i class="fa fa-plus"> </i> Create</button>

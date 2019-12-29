@@ -1,1 +1,25 @@
-<p>login works!</p>
+
+
+<div class="col-md-6 login-container border border-primary rounded">
+  <div class="card-body">    
+    <form [formGroup]="loginForm" (ngSubmit)="tryLogin()">
+
+      <h5 class="card-title">Login</h5>
+      <div *ngIf="invalidLogin" class="alert alert-danger" role="alert">
+        <div>Invalid credentials.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="login">User name</label>
+        <input type="text" class="form-control" formControlName="login" placeholder="User name" id="login" autocomplete="off">
+        <div class="alert alert-danger" *ngIf="loginForm.controls['login'].hasError('required') && loginForm.controls['login'].touched">User name is required</div>
+      </div>
+      <div class="form-group">
+        <label for="email">Password</label>
+        <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" autocomplete="off">
+        <div class="alert alert-danger" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Password is required</div>
+      </div>
+      <button type="button" class="btn btn-primary" [disabled]="loginForm.invalid" (click)="tryLogin()">Login</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="col-md-6 user-container">
+    <h2 class="text-center">Create new event</h2>
+
+    <div *ngIf="errorRequest" class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+      <!-- <div class="hidden">
+        <input type="text" formControlName="id" placeholder="id" name="id" class="form-control" id="id">
+      </div> -->
+
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" formControlName="title" placeholder="Title" name="title" class="form-control" id="title">
+        <div class="alert alert-danger" *ngIf="eventForm.controls['title'].hasError('required') && eventForm.controls['title'].touched">
+          Title is required
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea formControlName="description" placeholder="Description" name="description" class="form-control" id="description"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="startDate">Start Date:</label>
+        <div class="input-group">
+          <input formControlName="startDate" placeholder="yyyy-mm-dd" name="startDate" class="form-control" id="startDate"
+                  ngbDatepicker #startDate="ngbDatepicker" [minDate]="minDate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="startDate.toggle()" type="button">
+              <i class="fa fa-calendar"> </i>
+            </button>
+          </div>    
+        </div>
+        <div class="alert alert-danger" *ngIf="eventForm.controls['startDate'].hasError('required') && eventForm.controls['startDate'].touched">
+          Start date is required
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="endDate">End Date:</label>
+        <div class="input-group">
+
+          <input formControlName="endDate" placeholder="yyyy-mm-dd" name="endDate" class="form-control" id="endDate"
+                ngbDatepicker #endDate="ngbDatepicker" [minDate]="minDate">
+          <div class="input-group-append">
+           <button class="btn btn-outline-secondary" (click)="endDate.toggle()" type="button">
+             <i class="fa fa-calendar"> </i>
+           </button>
+          </div>  
+        </div>
+        <div class="alert alert-danger" *ngIf="eventForm.controls['endDate'].hasError('required') && eventForm.controls['endDate'].touched">
+          End date is required
+        </div>
+
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="eventForm.invalid">Create</button>&nbsp;
+      <button type="button" class="btn btn-danger" (click)="cancel()">
+        <i class="fa fa-remove"> </i> Cancel
+      </button>
+
+    </form>
+  </div>
